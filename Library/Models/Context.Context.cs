@@ -27,5 +27,7 @@ namespace Library.Models
     
         public virtual DbSet<User> UserSet { get; set; }
         public virtual DbSet<Course> CourseSet { get; set; }
+        public virtual DbSet<Schedule> ScheduleSet { get; set; }
+        public virtual DbSet<Exam> ExamSet { get; set; }
     }
 }

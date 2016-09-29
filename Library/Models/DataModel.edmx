@@ -16,21 +16,31 @@
           <EntitySet Name="UserSet" EntityType="DataModel.User" />
           <EntitySet Name="CourseSet" EntityType="DataModel.Course" />
           <AssociationSet Name="StudentCourse" Association="DataModel.StudentCourse">
-            <End Role="Student" EntitySet="UserSet" />
+            <End EntitySet="UserSet" Role="Student" />
+            <End EntitySet="CourseSet" Role="Course" />
+          </AssociationSet>
+          <EntitySet Name="ScheduleSet" EntityType="DataModel.Schedule" />
+          <AssociationSet Name="CourseSchedule" Association="DataModel.CourseSchedule">
             <End Role="Course" EntitySet="CourseSet" />
+            <End Role="Schedule" EntitySet="ScheduleSet" />
+          </AssociationSet>
+          <EntitySet Name="ExamSet" EntityType="DataModel.Exam" />
+          <AssociationSet Name="CourseExam" Association="DataModel.CourseExam">
+            <End Role="Course" EntitySet="CourseSet" />
+            <End Role="Exam" EntitySet="ExamSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" />
-          <Property Name="LastName" Type="String" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="FirstName" Nullable="false" Type="String" />
+          <Property Name="LastName" Nullable="false" Type="String" />
+          <Property Name="Email" Nullable="false" Type="String" />
           <NavigationProperty Name="Course" Relationship="DataModel.StudentCourse" FromRole="Student" ToRole="Course" />
-          <Property Name="Password" Type="String" Nullable="false" />
-          <Property Name="UserType" Type="DataModel.UserType" Nullable="false" />
+          <Property Name="Password" Nullable="false" Type="String" />
+          <Property Name="UserType" Nullable="false" Type="DataModel.UserType" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -38,13 +48,15 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CourseName" Type="String" Nullable="false" />
-          <Property Name="Instance" Type="DataModel.Instance" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
           <Property Name="ECTS" Type="DataModel.Instance" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="DataModel.StudentCourse" FromRole="Course" ToRole="Student" />
+          <NavigationProperty Name="Schedule" Relationship="DataModel.CourseSchedule" FromRole="Course" ToRole="Schedule" />
+          <NavigationProperty Name="Exam" Relationship="DataModel.CourseExam" FromRole="Course" ToRole="Exam" />
         </EntityType>
         <Association Name="StudentCourse">
-          <End Type="DataModel.User" Role="Student" Multiplicity="*" />
-          <End Type="DataModel.Course" Role="Course" Multiplicity="*" />
+          <End Type="DataModel.User" Multiplicity="*" Role="Student" />
+          <End Type="DataModel.Course" Multiplicity="*" Role="Course" />
         </Association>
         <EnumType Name="Instance">
           <Member Name="Spring" />
@@ -54,6 +66,60 @@
           <Member Name="Student" />
           <Member Name="Teacher" />
           <Member Name="Administrator" />
+        </EnumType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Day" Type="DataModel.Day" Nullable="false" />
+          <Property Name="TimeStart" Nullable="false" Type="DateTime" />
+          <Property Name="TimeEnd" Nullable="false" Type="DateTime" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="DataModel.CourseSchedule" FromRole="Schedule" ToRole="Course" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Instance" Type="DataModel.Instance" Nullable="false" />
+        </EntityType>
+        <Association Name="CourseSchedule">
+          <End Type="DataModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="DataModel.Schedule" Role="Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="Day">
+          <Member Name="Monday" />
+          <Member Name="Tuesday" />
+          <Member Name="Wednesday" />
+          <Member Name="Thursday" />
+          <Member Name="Friday" />
+        </EnumType>
+        <EntityType Name="Exam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Course" Relationship="DataModel.CourseExam" FromRole="Exam" ToRole="Course" />
+          <Property Name="ExamType" Type="DataModel.ExamType" Nullable="false" />
+          <Property Name="Grade" Type="DataModel.Grade" Nullable="false" />
+        </EntityType>
+        <Association Name="CourseExam">
+          <End Type="DataModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="DataModel.Exam" Role="Exam" Multiplicity="*" />
+        </Association>
+        <EnumType Name="ExamType">
+          <Member Name="Oral" />
+          <Member Name="Written" />
+          <Member Name="Essay" />
+        </EnumType>
+        <EnumType Name="Grade" >
+          <Member Name="Pass" />
+          <Member Name="Fail" />
         </EnumType>
       </Schema>
     </edmx:ConceptualModels>

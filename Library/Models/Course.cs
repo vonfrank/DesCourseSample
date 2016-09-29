@@ -9,23 +9,30 @@
 
 namespace Library.Models
 {
+    using MongoDB.Bson;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Course
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Course()
         {
             this.Student = new HashSet<User>();
+            this.Schedule = new HashSet<Schedule>();
+            this.Exam = new HashSet<Exam>();
         }
     
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         public string CourseName { get; set; }
-        public Instance Instance { get; set; }
+        public string Description { get; set; }
         public Instance ECTS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Student { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Schedule> Schedule { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Exam> Exam { get; set; }
     }
 }

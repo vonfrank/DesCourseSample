@@ -64,7 +64,9 @@ namespace Service
 
         public List<User> GetAllUser()
         {
-            throw new NotImplementedException();
+            var collection = database.GetCollection<User>("User");
+
+            return collection.Find(_ => true).ToList();
         }
 
         public User GetUser(string email)

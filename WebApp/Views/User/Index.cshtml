@@ -1,0 +1,30 @@
+﻿@using Library.Models;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+<hr />
+@Html.ActionLink("Click here to add a user", "Create", "User", new { area = "" }, null)
+<br /><br />
+<div class="panel panel-default">
+    <div class="panel-heading">All users</div>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+        </tr>
+        @model List<User>
+        @foreach (User u in Model)
+        {
+            <tr>
+                <th>@u.Id</th>
+                <th>@u.FirstName</th>
+                <th>@u.LastName</th>
+                <th>@u.Email</th>
+            </tr>
+        }
+    </table>
+</div>

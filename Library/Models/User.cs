@@ -9,9 +9,10 @@
 
 namespace Library.Models
 {
+    using MongoDB.Bson;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +21,7 @@ namespace Library.Models
             this.Course = new HashSet<Course>();
         }
     
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

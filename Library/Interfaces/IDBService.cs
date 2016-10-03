@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service
+namespace Library
 {
-    interface IDBService
+    public interface IDBService
     {
         void SetConnection(string url, int port, string db, string username, string password);
         void CloseConnection();

@@ -5,29 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Library.Models;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
-namespace Service
+namespace Library
 {
     public class DBService : IDBService
     {
-        public static DBService instance;
         private IMongoDatabase database;
 
         public DBService() { }
-
-        #region Singleton
-        public static DBService Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new DBService();
-                }
-                return instance;
-            }
-        }
-        #endregion
 
         #region Connection
         public void SetConnection(string url, int port, string db, string username, string password)
@@ -69,9 +55,11 @@ namespace Service
             return collection.Find(_ => true).ToList();
         }
 
-        public User GetUser(string email)
+        public User GetUser(string id)
         {
-            throw new NotImplementedException();
+            var collection = database.GetCollection<User>("User");
+
+            return collection.Find(_ => _.Id.Pid.Equals(id)).Single();
         }
 
         public List<Course> GetUserCourse(User user)

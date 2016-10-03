@@ -15,6 +15,7 @@
             <th>First name</th>
             <th>Last name</th>
             <th>Email</th>
+            <th> </th>
         </tr>
         @model List<User>
         @foreach (User u in Model)
@@ -24,7 +25,9 @@
                 <th>@u.FirstName</th>
                 <th>@u.LastName</th>
                 <th>@u.Email</th>
+                <th>@Html.ActionLink("Edit", u.Id.ToString(), "Edit")</th>
             </tr>
         }
     </table>
 </div>
+

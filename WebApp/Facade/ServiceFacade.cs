@@ -31,5 +31,10 @@ namespace WebApp.Facade
         {
             dbservice.CreateUser(user);
         }
+
+        public void SetUser(User user)
+        {
+            dbservice.SetUser(user);
+        }
     }
 }

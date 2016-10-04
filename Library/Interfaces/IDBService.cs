@@ -14,10 +14,10 @@ namespace Library
         void CreateUser(User user);
         List<User> GetAllUser();
         List<User> GetUserType(UserType usertype);
-        User GetUser(string email);
+        User GetUser(string user);
         List<Course> GetUserCourse(User user);
         List<Course> GetAllCourse();
-        void SetUser(User newuser, User olduser);
+        void SetUser(User user);
         void SignUpForCourse(User user, Course course);
         void RemoveFromCourse(User user, Course course);
     }

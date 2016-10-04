@@ -57,18 +57,19 @@ namespace WebApp.Controllers
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(string userid)
+        public ActionResult Edit(string id)
         {
-            return View(sf.GetUser(userid));
+
+            return View(sf.GetUser(id));
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, User user)
+        public ActionResult Edit(User user)
         {
             try
             {
-                // TODO: Add update logic here
+                sf.SetUser(user);
 
                 return RedirectToAction("Index");
             }

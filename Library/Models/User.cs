@@ -10,6 +10,7 @@
 namespace Library.Models
 {
     using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
 
@@ -21,6 +22,7 @@ namespace Library.Models
             this.Course = new HashSet<Course>();
         }
     
+        [BsonId]
         public ObjectId Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

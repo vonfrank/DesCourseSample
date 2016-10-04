@@ -52,14 +52,14 @@ namespace Library
         {
             var collection = database.GetCollection<User>("User");
 
-            return collection.Find(_ => true).ToList();
+            return collection.Find(x => true).ToList();
         }
 
         public User GetUser(string id)
         {
             var collection = database.GetCollection<User>("User");
 
-            return collection.Find(_ => _.Id.Pid.Equals(id)).Single();
+            return collection.Find(x => x.Id == new ObjectId(id)).Single();
         }
 
         public List<Course> GetUserCourse(User user)
@@ -77,9 +77,13 @@ namespace Library
             throw new NotImplementedException();
         }
 
-        public void SetUser(User newuser, User olduser)
+        public void SetUser(User user)
         {
-            throw new NotImplementedException();
+            var collection = database.GetCollection<User>("User");
+            var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
+            var update = Builders<User>.Update.Set(x => x, user);
+
+            collection.UpdateOne(filter, update);
         }
 
         public void SignUpForCourse(User user, Course course)

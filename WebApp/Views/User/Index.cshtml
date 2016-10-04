@@ -25,7 +25,7 @@
                 <th>@u.FirstName</th>
                 <th>@u.LastName</th>
                 <th>@u.Email</th>
-                <th>@Html.ActionLink("Edit", u.Id.ToString(), "Edit")</th>
+                <th>@Html.ActionLink("Edit", "Edit", new { id = u.Id.ToString() }, null)</th>
             </tr>
         }
     </table>

@@ -1,6 +1,5 @@
 ﻿using Library;
 using Library.Models;
-using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,44 +9,40 @@ using WebApp.Facade;
 
 namespace WebApp.Controllers
 {
-    public class UserController : Controller
+    public class CourseController : Controller
     {
         private ServiceFacade sf;
 
-        public UserController()
+        public CourseController()
         {
             sf = new ServiceFacade(new DBService());
         }
 
-        // GET: User
+        // GET: Course
         public ActionResult Index()
         {
-            return View(sf.GetAllUser());
+            return View(sf.GetAllCourse());
         }
 
-        // GET: User/Details/5
+        // GET: Course/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: User/Create
+        // GET: Course/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Course/Create
         [HttpPost]
-        public ActionResult Create(User user)
+        public ActionResult Create(Course course)
         {
             try
             {
-                byte[] data = System.Text.Encoding.ASCII.GetBytes(user.Password);
-                data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
-                user.Password = System.Text.Encoding.ASCII.GetString(data);
-
-                sf.CreateUser(user);
+                sf.CreateCourse(course);
 
                 return RedirectToAction("Index");
             }
@@ -57,35 +52,35 @@ namespace WebApp.Controllers
             }
         }
 
-        // GET: User/Edit/5
+        // GET: Course/Edit/5
         public ActionResult Edit(string id)
         {
-            return View(sf.GetUser(id));
+            return View(sf.GetCourse(id));
         }
 
-        // POST: User/Edit/5
+        // POST: Course/Edit/5
         [HttpPost]
-        public ActionResult Edit(string id, User updateduser)
+        public ActionResult Edit(string id, Course updatedcourse)
         {
             try
             {
-                sf.SetUser(id, updateduser);
+                sf.SetCourse(id, updatedcourse);
 
                 return RedirectToAction("Index");
             }
-            catch(ArgumentNullException e)
+            catch
             {
-                return View("Error");
+                return View();
             }
         }
 
-        // GET: User/Delete/5
+        // GET: Course/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: User/Delete/5
+        // POST: Course/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

@@ -12,13 +12,16 @@ namespace Library
         void SetConnection(string url, int port, string db, string username, string password);
         void CloseConnection();
         void CreateUser(User user);
+        void CreateCourse(Course course);
+        User GetUser(string id);
         List<User> GetAllUser();
         List<User> GetUserType(UserType usertype);
-        User GetUser(string user);
-        List<Course> GetUserCourse(User user);
+        List<Course> GetUserCourse(string userid);
+        Course GetCourse(string id);
         List<Course> GetAllCourse();
-        void SetUser(User user);
-        void SignUpForCourse(User user, Course course);
-        void RemoveFromCourse(User user, Course course);
+        void SetUser(string id, User updateduser);
+        void SetCourse(string id, Course updatedcourse);
+        void SignUpForCourse(string userid, string courseid);
+        void RemoveFromCourse(string userid, string courseid);
     }
 }

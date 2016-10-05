@@ -43,16 +43,11 @@ namespace Library
             collection.InsertOne(user);
         }
 
-        public List<Course> GetAllCourse()
+        public void CreateCourse(Course course)
         {
-            throw new NotImplementedException();
-        }
+            var collection = database.GetCollection<Course>("Course");
 
-        public List<User> GetAllUser()
-        {
-            var collection = database.GetCollection<User>("User");
-
-            return collection.Find(x => true).ToList();
+            collection.InsertOne(course);
         }
 
         public User GetUser(string id)
@@ -62,9 +57,11 @@ namespace Library
             return collection.Find(x => x.Id == new ObjectId(id)).Single();
         }
 
-        public List<Course> GetUserCourse(User user)
+        public List<User> GetAllUser()
         {
-            throw new NotImplementedException();
+            var collection = database.GetCollection<User>("User");
+
+            return collection.Find(x => true).ToList();
         }
 
         public List<User> GetUserType(UserType usertype)
@@ -72,21 +69,50 @@ namespace Library
             throw new NotImplementedException();
         }
 
-        public void RemoveFromCourse(User user, Course course)
+        public List<Course> GetUserCourse(string userid)
         {
             throw new NotImplementedException();
         }
 
-        public void SetUser(User user)
+        public Course GetCourse(string id)
         {
-            var collection = database.GetCollection<User>("User");
-            var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
-            var update = Builders<User>.Update.Set(x => x, user);
+            var collection = database.GetCollection<Course>("Course");
 
-            collection.UpdateOne(filter, update);
+            return collection.Find(x => x.Id == new ObjectId(id)).Single();
         }
 
-        public void SignUpForCourse(User user, Course course)
+        public List<Course> GetAllCourse()
+        {
+            var collection = database.GetCollection<Course>("Course");
+
+            return collection.Find(x => true).ToList();
+        }
+
+        public void SetUser(string id, User updateduser)
+        {
+            var collection = database.GetCollection<User>("User");
+            var filter = Builders<User>.Filter.Eq(x => x.Id, new ObjectId(id));
+
+            updateduser.Id = new ObjectId(id);
+
+            collection.ReplaceOne(filter, updateduser);
+        }
+
+        public void SetCourse(string id, Course updatedcourse)
+        {
+            var collection = database.GetCollection<Course>("Course");
+            var filter = Builders<Course>.Filter.Eq(x => x.Id, new ObjectId(id));
+
+            updatedcourse.Id = new ObjectId(id);
+
+            collection.ReplaceOne(filter, updatedcourse);
+        }
+        public void SignUpForCourse(string userid, string courseid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveFromCourse(string userid, string courseid)
         {
             throw new NotImplementedException();
         }

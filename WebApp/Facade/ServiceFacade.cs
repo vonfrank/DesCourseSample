@@ -17,9 +17,14 @@ namespace WebApp.Facade
             dbservice.SetConnection("185.15.73.124", 27017, "descoursesystem", "desuser", "vonfrankisawesome");
         }
 
-        public List<User> GetAllUser()
+        public void CreateUser(User user)
         {
-            return dbservice.GetAllUser();
+            dbservice.CreateUser(user);
+        }
+
+        public void CreateCourse(Course course)
+        {
+            dbservice.CreateCourse(course);
         }
 
         public User GetUser(string id)
@@ -27,14 +32,49 @@ namespace WebApp.Facade
             return dbservice.GetUser(id);
         }
 
-        public void CreateUser(User user)
+        public List<User> GetAllUser()
         {
-            dbservice.CreateUser(user);
+            return dbservice.GetAllUser();
         }
 
-        public void SetUser(User user)
+        public List<User> GetUserType(UserType usertype)
         {
-            dbservice.SetUser(user);
+            return dbservice.GetUserType(usertype);
+        }
+
+        public List<Course> GetUserCourse(string userid)
+        {
+            return dbservice.GetUserCourse(userid);
+        }
+
+        public Course GetCourse(string id)
+        {
+            return dbservice.GetCourse(id);
+        }
+
+        public List<Course> GetAllCourse()
+        {
+            return dbservice.GetAllCourse();
+        }
+
+        public void SetUser(string id, User updateduser)
+        {
+            dbservice.SetUser(id, updateduser);
+        }
+
+        public void SetCourse(string id, Course updatedcourse)
+        {
+            dbservice.SetCourse(id, updatedcourse);
+        }
+
+        public void SignUpForCourse(string userid, string courseid)
+        {
+            dbservice.SignUpForCourse(userid, courseid);
+        }
+
+        public void RemoveFromCourse(string userid, string courseid)
+        {
+            dbservice.RemoveFromCourse(userid, courseid);
         }
     }
 }

@@ -22,7 +22,6 @@ namespace Library.Models
             this.Course = new HashSet<Course>();
         }
     
-        [BsonId]
         public ObjectId Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

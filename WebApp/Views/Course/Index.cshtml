@@ -1,0 +1,32 @@
+﻿@using Library.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Courses</h2>
+<hr />
+@Html.ActionLink("Click here to add a course", "Create", "Course", new { area = "" }, null)
+<br /><br />
+<div class="panel panel-default">
+    <div class="panel-heading">All users</div>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Course name</th>
+            <th>Description</th>
+            <th>ECTS</th>
+            <th> </th>
+        </tr>
+        @model List<Course>
+        @foreach (Course c in Model)
+        {
+            <tr>
+                <th>@c.Id</th>
+                <th>@c.CourseName</th>
+                <th>@c.Description</th>
+                <th>@c.ECTS</th>
+                <th>@Html.ActionLink("Edit", "Edit", new { id = c.Id.ToString() }, null)</th>
+            </tr>
+        }
+    </table>
+</div>

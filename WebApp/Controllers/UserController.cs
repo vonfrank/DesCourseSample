@@ -79,6 +79,11 @@ namespace WebApp.Controllers
             }
         }
 
+        public ActionResult UserCourses(string id)
+        {
+            return View(sf.GetUserCourse(id));
+        }
+
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {

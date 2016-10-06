@@ -1,7 +1,30 @@
-﻿
+﻿@using Library.Models
 @{
     ViewBag.Title = "UserCourses";
 }
 
-<h2>UserCourses</h2>
+<h2>User courses</h2>
 
+<div class="panel panel-default">
+    <div class="panel-heading">Available courses</div>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Course name</th>
+            <th>Description</th>
+            <th>ECTS</th>
+            <th> </th>
+        </tr>
+        @model List<Course>
+        @foreach (Course c in Model)
+        {
+            <tr>
+                <th>@c.Id</th>
+                <th>@c.CourseName</th>
+                <th>@c.Description</th>
+                <th>@c.ECTS</th>
+                <th>@Html.ActionLink("Edit", "Edit", new { id = c.Id.ToString() }, null)</th>
+            </tr>
+        }
+    </table>
+</div>

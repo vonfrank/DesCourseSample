@@ -71,7 +71,9 @@ namespace Library
 
         public List<Course> GetUserCourse(string userid)
         {
-            throw new NotImplementedException();
+            var collection = database.GetCollection<User>("User");
+
+            return collection.Find(x => x.Id == new ObjectId(userid)).Single().Course.ToList();
         }
 
         public Course GetCourse(string id)

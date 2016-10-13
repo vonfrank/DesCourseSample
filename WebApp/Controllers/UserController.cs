@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Facade;
+using WebApp.ViewModel;
 
 namespace WebApp.Controllers
 {
@@ -73,7 +74,7 @@ namespace WebApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch(ArgumentNullException e)
+            catch
             {
                 return View("Error");
             }
@@ -81,7 +82,19 @@ namespace WebApp.Controllers
 
         public ActionResult UserCourses(string id)
         {
-            return View(sf.GetUserCourse(id));
+            UserCourseViewModel _viewmodel = new UserCourseViewModel();
+            _viewmodel.allcourses = sf.GetAllCourse();
+            _viewmodel.usercourses = sf.GetUserCourse(id);
+            _viewmodel.user = sf.GetUser(id);
+
+            return View(_viewmodel);
+        }
+
+        public ActionResult UserCoursesAdd(string userid, string courseid)
+        {
+            sf.SignUpForCourse(userid, courseid);
+
+            return RedirectToAction("Index");
         }
 
         // GET: User/Delete/5

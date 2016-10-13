@@ -10,6 +10,7 @@
 namespace Library.Models
 {
     using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
 
@@ -18,21 +19,22 @@ namespace Library.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Course()
         {
-            this.Student = new HashSet<User>();
-            this.Schedule = new HashSet<Schedule>();
-            this.Exam = new HashSet<Exam>();
+            this.User = new HashSet<ObjectId>();
+            this.Exam = new HashSet<ObjectId>();
+            this.Schedule = new HashSet<ObjectId>();
         }
-    
+
+        [BsonId]
         public ObjectId Id { get; set; }
         public string CourseName { get; set; }
         public string Description { get; set; }
-        public Instance ECTS { get; set; }
+        public int ECTS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Student { get; set; }
+        public virtual ICollection<ObjectId> User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Schedule> Schedule { get; set; }
+        public virtual ICollection<ObjectId> Exam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Exam> Exam { get; set; }
+        public virtual ICollection<ObjectId> Schedule { get; set; }
     }
 }

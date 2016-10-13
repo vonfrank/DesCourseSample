@@ -15,7 +15,7 @@
             <th>First name</th>
             <th>Last name</th>
             <th>Email</th>
-            <th> </th>
+            <th>Assigned courses</th>
             <th> </th>
             <th> </th>
         </tr>
@@ -27,7 +27,7 @@
                 <th>@u.FirstName</th>
                 <th>@u.LastName</th>
                 <th>@u.Email</th>
-                <th>@Html.ActionLink("Edit user course(s)", "UserCourses", new { id = u.Id.ToString() }, null)</th>
+                <th>@Html.ActionLink(u.Course.Count().ToString() + " - Edit", "UserCourses", new { id = u.Id.ToString() }, null)</th>
                 <th>@Html.ActionLink("Edit", "Edit", new { id = u.Id.ToString() }, null)</th>
                 <th>@Html.ActionLink("Delete", "Delete", new { id = u.Id.ToString() }, null)</th>
             </tr>

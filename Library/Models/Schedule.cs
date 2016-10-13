@@ -10,19 +10,22 @@
 namespace Library.Models
 {
     using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
 
     public partial class Schedule
     {
+        [BsonId]
         public ObjectId Id { get; set; }
         public Day Day { get; set; }
-        public System.DateTime TimeStart { get; set; }
-        public System.DateTime TimeEnd { get; set; }
+        public string TimeStart { get; set; }
+        public string TimeEnd { get; set; }
         public int Year { get; set; }
-        public int CourseId { get; set; }
         public Instance Instance { get; set; }
+        public ObjectId CourseId { get; set; }
     
         public virtual Course Course { get; set; }
+        public virtual Exam Exam { get; set; }
     }
 }

@@ -13,8 +13,8 @@ namespace Library.Models
     
     public enum UserType : int
     {
-        Student = 0,
+        Administrator = 0,
         Teacher = 1,
-        Administrator = 2
+        Student = 2
     }
 }

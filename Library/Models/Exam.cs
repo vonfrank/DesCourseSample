@@ -10,15 +10,19 @@
 namespace Library.Models
 {
     using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
 
     public partial class Exam
     {
+        [BsonId]
         public ObjectId Id { get; set; }
         public ExamType ExamType { get; set; }
-        public Grade Grade { get; set; }
+        public int Grade { get; set; }
+        public ObjectId CourseId { get; set; }
     
         public virtual Course Course { get; set; }
+        public virtual Schedule Schedule { get; set; }
     }
 }

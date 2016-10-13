@@ -14,7 +14,6 @@ namespace Library.Models
     public enum ExamType : int
     {
         Oral = 0,
-        Written = 1,
-        Essay = 2
+        Written = 1
     }
 }

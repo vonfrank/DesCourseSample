@@ -1,10 +1,11 @@
 ﻿@using Library.Models
+@using WebApp.ViewModel
 @{
     ViewBag.Title = "UserCourses";
 }
 
 <h2>User courses</h2>
-
+@model UserCourseViewModel
 <div class="panel panel-default">
     <div class="panel-heading">My courses</div>
     <table class="table">
@@ -13,15 +14,18 @@
             <th>Course name</th>
             <th>Description</th>
             <th>ECTS</th>
-            <th> </th>
+            <th>Remove from "My courses"</th>
         </tr>
+        @foreach (Course c in Model.usercourses)
+        {
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>@c.Id</th>
+                <th>@c.CourseName</th>
+                <th>@c.Description</th>
+                <th>@c.ECTS</th>
                 <th></th>
             </tr>
+        }
     </table>
 </div>
 <hr />
@@ -33,16 +37,17 @@
             <th>Course name</th>
             <th>Description</th>
             <th>ECTS</th>
-            <th> </th>
+            <th>Add to "My courses"</th>
         </tr>
-        @model User
-        @foreach(Course c in Model)
+        @foreach (Course c in Model.allcourses)
+        {
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>@c.Id</th>
+                <th>@c.CourseName</th>
+                <th>@c.Description</th>
+                <th>@c.ECTS</th>
+                <th>@Html.ActionLink("Add", "UserCoursesAdd", new { userid = Model.user.Id.ToString(), courseid = c.Id.ToString() }, null)</th>
             </tr>
+        }
     </table>
 </div>

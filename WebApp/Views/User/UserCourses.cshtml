@@ -23,7 +23,7 @@
                 <th>@c.CourseName</th>
                 <th>@c.Description</th>
                 <th>@c.ECTS</th>
-                <th></th>
+                <th>@Html.ActionLink("Remove", "UserCoursesRemove", new { userid = Model.user.Id.ToString(), courseid = c.Id.ToString() }, null)</th>
             </tr>
         }
     </table>

@@ -15,7 +15,9 @@
             <th>Course name</th>
             <th>Description</th>
             <th>ECTS</th>
-            <th> </th>
+            <th>Assigned users</th>
+            <th>Edit course</th>
+            <th>Delete course</th>
         </tr>
         @model List<Course>
         @foreach (Course c in Model)
@@ -25,7 +27,9 @@
                 <th>@c.CourseName</th>
                 <th>@c.Description</th>
                 <th>@c.ECTS</th>
+                <th>@Html.ActionLink(c.User.Count().ToString(), "CourseUsers", new { id = c.Id.ToString() }, null)</th>
                 <th>@Html.ActionLink("Edit", "Edit", new { id = c.Id.ToString() }, null)</th>
+                <th>@Html.ActionLink("Delete", "Delete", new { id = c.Id.ToString() }, null)</th>
             </tr>
         }
     </table>

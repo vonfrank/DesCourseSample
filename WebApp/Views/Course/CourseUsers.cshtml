@@ -1,0 +1,30 @@
+﻿@using Library.Models
+@using WebApp.ViewModel
+@{
+    ViewBag.Title = "CourseUsers";
+}
+
+<h2>CourseUsers</h2>
+@model UserCourseViewModel
+<div class="panel panel-default">
+    <div class="panel-heading">My courses</div>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Remove user from course</th>
+        </tr>
+        @foreach (User u in Model.courseusers)
+        {
+            <tr>
+                <th>@u.Id</th>
+                <th>@u.FirstName</th>
+                <th>@u.LastName</th>
+                <th>@u.Email</th>
+                <th>@Html.ActionLink("Remove", "CourseUsersRemove", new { userid = u.Id.ToString(), courseid = Model.course.Id.ToString() }, null)</th>
+            </tr>
+        }
+    </table>
+</div>

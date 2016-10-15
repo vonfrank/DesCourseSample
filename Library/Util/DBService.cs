@@ -16,9 +16,11 @@ namespace Library
         public DBService() { }
 
         #region Connection
-        public void SetConnection(string url, int port, string db, string username, string password)
+        public bool SetConnection(string url, int port, string db, string username, string password)
         {
-            var _client = new MongoClient(
+            try
+            {
+                var _client = new MongoClient(
                 new MongoClientSettings
                 {
                     Credentials = new[]
@@ -27,10 +29,19 @@ namespace Library
                     },
                     Server = new MongoServerAddress(url, port)
                 });
-            database = _client.GetDatabase(db);
+                database = _client.GetDatabase(db);
+
+                return true;
+            }
+            catch
+            {
+                //TODO: Error handling
+                return false;
+            }
+            
         }
 
-        public void CloseConnection()
+        public bool CloseConnection()
         {
             throw new NotImplementedException();
         }
@@ -38,16 +49,30 @@ namespace Library
 
         public void CreateUser(User user)
         {
-            var _collection = database.GetCollection<User>("User");
+            try
+            {
+                var _collection = database.GetCollection<User>("User");
 
-            _collection.InsertOne(user);
+                _collection.InsertOne(user);
+            }
+            catch
+            {
+                //TODO: Error handling
+            }
         }
 
         public void CreateCourse(Course course)
         {
-            var _collection = database.GetCollection<Course>("Course");
+            try
+            {
+                var _collection = database.GetCollection<Course>("Course");
 
-            _collection.InsertOne(course);
+                _collection.InsertOne(course);
+            }
+            catch
+            {
+                //TODO: Error handling
+            }
         }
 
         public User GetUser(string id)
@@ -59,9 +84,18 @@ namespace Library
 
         public List<User> GetAllUser()
         {
-            var _collection = database.GetCollection<User>("User");
+            try
+            {
+                var _collection = database.GetCollection<User>("User");
 
-            return _collection.Find(x => true).ToList();
+                return _collection.Find(x => true).ToList();
+            }
+            catch
+            {
+                //TODO: Error handling
+
+                return null;
+            }
         }
 
         public List<User> GetUserType(UserType usertype)
@@ -71,30 +105,82 @@ namespace Library
 
         public List<Course> GetUserCourse(string userid)
         {
-            var _collection = database.GetCollection<User>("User");
-            List<ObjectId> _courseidlist = _collection.Find(x => x.Id == new ObjectId(userid)).Single().Course.ToList();
-            List<Course> _courselist = new List<Course>();
-
-            foreach(ObjectId oid in _courseidlist)
+            try
             {
-                _courselist.Add(GetCourse(oid.ToString()));
-            }
+                var _collection = database.GetCollection<User>("User");
+                List<ObjectId> _courseidlist = _collection.Find(x => x.Id == new ObjectId(userid)).Single().Course.ToList();
+                List<Course> _courselist = new List<Course>();
 
-            return _courselist;
+                foreach (ObjectId oid in _courseidlist)
+                {
+                    _courselist.Add(GetCourse(oid.ToString()));
+                }
+
+                return _courselist;
+            }
+            catch
+            {
+                //TODO: Error handling
+
+                return null;
+            }
+        }
+
+        public List<User> GetCourseUser(string courseid)
+        {
+            try
+            {
+                var _collection = database.GetCollection<Course>("Course");
+                List<ObjectId> _useridlist = _collection.Find(x => x.Id == new ObjectId(courseid)).Single().User.ToList();
+                List<User> _userlist = new List<User>();
+
+                foreach (ObjectId oid in _useridlist)
+                {
+                    _userlist.Add(GetUser(oid.ToString()));
+                }
+
+                return _userlist;
+            }
+            catch
+            {
+                //TODO: Error handling
+
+                return null;
+            }
         }
 
         public Course GetCourse(string id)
         {
-            var _collection = database.GetCollection<Course>("Course");
+            try
+            {
+                var _collection = database.GetCollection<Course>("Course");
 
-            return _collection.Find(x => x.Id == new ObjectId(id)).Single();
+                return _collection.Find(x => x.Id == new ObjectId(id)).Single();
+            }
+            catch
+            {
+                //TODO: Error handling
+
+                return null;
+            }
+
+            
         }
 
         public List<Course> GetAllCourse()
         {
-            var _collection = database.GetCollection<Course>("Course");
+            try
+            {
+                var _collection = database.GetCollection<Course>("Course");
 
-            return _collection.Find(x => true).ToList();
+                return _collection.Find(x => true).ToList();
+            }
+            catch
+            {
+                //TODO: Error handling
+
+                return null;
+            }
         }
 
         public void SetUser(string id, User updateduser)
@@ -115,6 +201,42 @@ namespace Library
             updatedcourse.Id = new ObjectId(id);
 
             _collection.ReplaceOne(_filter, updatedcourse);
+        }
+
+        public void DeleteUser(string id)
+        {
+            var _collection = database.GetCollection<User>("User");
+            var _filter = Builders<User>.Filter.Eq(x => x.Id, new ObjectId(id));
+
+            foreach(Course c in GetAllCourse())
+            {
+                if(c.User.Contains(new ObjectId(id)))
+                {
+                    Course _tempcourse = c;
+                    _tempcourse.User.Remove(new ObjectId(id));
+                    SetCourse(c.Id.ToString(), _tempcourse);
+                }
+            }
+
+            _collection.DeleteOne(_filter);
+        }
+
+        public void DeleteCourse(string id)
+        {
+            var _collection = database.GetCollection<Course>("Course");
+            var _filter = Builders<Course>.Filter.Eq(x => x.Id, new ObjectId(id));
+
+            foreach(User u in GetAllUser())
+            {
+                if(u.Course.Contains(new ObjectId(id)))
+                {
+                    User _tempuser = u;
+                    _tempuser.Course.Remove(new ObjectId(id));
+                    SetUser(u.Id.ToString(), _tempuser);
+                }
+            }
+
+            _collection.DeleteOne(_filter);
         }
         public void SignUpForCourse(string userid, string courseid)
         {

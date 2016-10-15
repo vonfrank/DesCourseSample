@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Facade;
+using WebApp.ViewModel;
 
 namespace WebApp.Controllers
 {
@@ -74,26 +75,28 @@ namespace WebApp.Controllers
             }
         }
 
-        // GET: Course/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult CourseUsers(string id)
         {
-            return View();
+            UserCourseViewModel _viewmodel = new UserCourseViewModel();
+            _viewmodel.courseusers = sf.GetCourseUser(id);
+            _viewmodel.course = sf.GetCourse(id);
+
+            return View(_viewmodel);
         }
 
-        // POST: Course/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult CourseUsersRemove(string userid, string courseid)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            sf.RemoveFromCourse(userid, courseid);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
+        }
+
+        // GET: Course/Delete/5
+        public ActionResult Delete(string id)
+        {
+            sf.DeleteCourse(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

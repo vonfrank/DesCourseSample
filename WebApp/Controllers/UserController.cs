@@ -97,26 +97,19 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult UserCoursesRemove(string userid, string courseid)
         {
-            return View();
+            sf.RemoveFromCourse(userid, courseid);
+
+            return RedirectToAction("Index");
         }
 
-        // POST: User/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // GET: User/Delete/5
+        public ActionResult Delete(string id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            sf.DeleteUser(id);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }

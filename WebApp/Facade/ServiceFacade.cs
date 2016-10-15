@@ -14,7 +14,11 @@ namespace WebApp.Facade
         public ServiceFacade(IDBService idbservice)
         {
             this.dbservice = idbservice;
-            dbservice.SetConnection("185.15.73.124", 27017, "descoursesystem", "desuser", "vonfrankisawesome");
+
+            if(!dbservice.SetConnection("185.15.73.124", 27017, "descoursesystem", "desuser", "vonfrankisawesome") == true)
+            {
+                //Do error stuff
+            }
         }
 
         public void CreateUser(User user)
@@ -47,6 +51,11 @@ namespace WebApp.Facade
             return dbservice.GetUserCourse(userid);
         }
 
+        public List<User> GetCourseUser(string courseid)
+        {
+            return dbservice.GetCourseUser(courseid);
+        }
+
         public Course GetCourse(string id)
         {
             return dbservice.GetCourse(id);
@@ -65,6 +74,16 @@ namespace WebApp.Facade
         public void SetCourse(string id, Course updatedcourse)
         {
             dbservice.SetCourse(id, updatedcourse);
+        }
+
+        public void DeleteUser(string id)
+        {
+            dbservice.DeleteUser(id);
+        }
+
+        public void DeleteCourse(string id)
+        {
+            dbservice.DeleteCourse(id);
         }
 
         public void SignUpForCourse(string userid, string courseid)

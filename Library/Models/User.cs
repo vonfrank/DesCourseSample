@@ -13,6 +13,7 @@ namespace Library.Models
     using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
     public partial class User
     {
@@ -24,10 +25,15 @@ namespace Library.Models
     
         [BsonId]
         public ObjectId Id { get; set; }
+        [DisplayName("First name")]
         public string FirstName { get; set; }
+        [DisplayName("Last name")]
         public string LastName { get; set; }
+        [DisplayName("Email")]
         public string Email { get; set; }
+        [DisplayName("Password")]
         public string Password { get; set; }
+        [DisplayName("User type")]
         public UserType UserType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

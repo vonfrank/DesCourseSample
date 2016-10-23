@@ -13,6 +13,7 @@ namespace Library.Models
     using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
     public partial class Course
     {
@@ -26,8 +27,11 @@ namespace Library.Models
 
         [BsonId]
         public ObjectId Id { get; set; }
+        [DisplayName("Course name")]
         public string CourseName { get; set; }
+        [DisplayName("Description")]
         public string Description { get; set; }
+        [DisplayName("ECTS")]
         public int ECTS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
